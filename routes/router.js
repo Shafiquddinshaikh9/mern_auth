@@ -51,13 +51,12 @@ router.post("/login", async (req, res) => {
     if (isMatch) {
       const token = await user.generateAuthToken();
       console.log(token);
-      res
-        // .status(201)
-        // .send({ message: "token generated", token: token })
-        .cookie("token", token, {
-          expires: new Date(Date.now() + 86400000),
-          httpOnly: true,
-        });
+      // .status(201)
+      // .send({ message: "token generated", token: token })
+      res.cookie("token", token, {
+        expires: new Date(Date.now() + 86400000),
+        httpOnly: true,
+      });
     } else {
       res.status(401).send({ message: "invalid creds pass", code: 401 });
     }

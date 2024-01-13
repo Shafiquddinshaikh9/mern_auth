@@ -30,7 +30,12 @@ const Header = () => {
       >
         <div className="container-fluid">
           <Link to="/" className="navbar-brand ps-2">
-            Logo
+            <img
+              src="https://marketplace.canva.com/EAE2-UabFFY/1/0/1600w/canva-a-letter-tech-logo-A6Vdrh0dthw.jpg"
+              alt="asdnaisd"
+              className="rounded-circle"
+              style={{ height: "40px", width: "40px" }}
+            />
           </Link>
           <button
             className="navbar-toggler"
@@ -45,6 +50,11 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li className="nav-item me-1">
+                <Link className="nav-link active" aria-current="page" to="/">
+                  Home
+                </Link>
+              </li>
               <li className="nav-item me-1">
                 <Link
                   className="nav-link active"
