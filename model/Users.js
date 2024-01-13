@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+// const key = process.env.SEC_KEY;
 
 const userSchema = new mongoose.Schema({
   firstname: {
@@ -31,6 +33,17 @@ const userSchema = new mongoose.Schema({
     },
   ],
 });
+
+userSchema.methods.generateAuthToken = async function () {
+  try {
+    const token = jwt.sign({ _id: this._id }, process.env.SEC_KEY);
+    this.tokens = this.tokens.concat({ token });
+    await this.save();
+    return token;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const User = mongoose.model("user", userSchema);
 

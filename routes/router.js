@@ -2,7 +2,6 @@ import express from "express";
 import bcrypt from "bcrypt";
 import User from "../model/Users.js";
 const router = express.Router();
-
 //-------------SignUP/Register---------------//
 router.post("/signup", async (req, res) => {
   const { firstname, lastname, email, password, cpassword } = req.body;
@@ -38,12 +37,21 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) return res.status(401).send({ message: "User not exist" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      const token = await user.generateAuthToken();
+      console.log(token);
+      res.status(401).send({ message: "token generated", token });
+    } else {
+      res.status(401).send({ message: "invalid creds pass" });
+    }
   } catch (error) {
     console.log(error);
     res.status(501).send({ message: "Something went wrong" });
   }
 });
-//-------------SignUP/Register---------------//
+//-------------Home---------------//
 router.get("/home", async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
 });
