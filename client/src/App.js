@@ -21,7 +21,6 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/*" element={<Notfound />} />
       </Routes>
-      <Footer />
     </>
   );
 }

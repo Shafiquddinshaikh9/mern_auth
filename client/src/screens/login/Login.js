@@ -43,7 +43,7 @@ const Login = () => {
       });
 
       const token = result.token;
-      localStorage.setItem("token", token);
+      // localStorage.setItem("token", token);
       setTimeout(() => {
         navigate("/");
       }, 2000);
