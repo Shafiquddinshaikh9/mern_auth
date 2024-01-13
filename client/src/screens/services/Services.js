@@ -1,10 +1,16 @@
 import React from "react";
 import "./services.css";
+import { motion } from "framer-motion";
+
 const Services = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-6 d-flex flex-column justify-content-center align-items-center right">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="col-md-6 d-flex flex-column justify-content-center align-items-center right"
+        >
           <h3>
             <i>Services</i>
           </h3>
@@ -12,8 +18,12 @@ const Services = () => {
             <i>our home page</i>
           </h3>
           <p>we have very inspired technologies</p>
-        </div>
-        <div className="col-md-6 p-md-2 d-flex flex-column justify-content-center align-items-center left">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="col-md-6 p-md-2 d-flex flex-column justify-content-center align-items-center left"
+        >
           <div>
             <img
               className="rounded"
@@ -21,7 +31,7 @@ const Services = () => {
               alt="akcbascb"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

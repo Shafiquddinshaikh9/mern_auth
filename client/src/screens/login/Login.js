@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { motion } from "framer-motion";
 const Login = () => {
   // const [data, setData] = useState({});
   const [inpdata, setInpData] = useState({
@@ -55,7 +56,11 @@ const Login = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col d-flex flex-column justify-content-center align-items-center ">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="col d-flex flex-column justify-content-center align-items-center "
+        >
           <h1 className="text-body-tertiary p-1">
             <i>Login</i>
           </h1>
@@ -91,13 +96,17 @@ const Login = () => {
                 />
               </div>
               <div className="d-flex flex-column justify-content-center align-items-center">
-                <button
+                <motion.button
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  whileTap={{ scale: 0.9 }}
                   type="submit"
                   className="btn btn-primary mb-2"
                   onClick={handleSubmit}
                 >
                   Login
-                </button>
+                </motion.button>
                 <Link to="/login">
                   <p>Don't have an account?click here for signin</p>
                 </Link>
@@ -105,7 +114,7 @@ const Login = () => {
             </form>
             <ToastContainer />
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

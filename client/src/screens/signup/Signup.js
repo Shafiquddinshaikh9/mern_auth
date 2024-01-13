@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
 const Signup = () => {
   // const [data, setData] = useState({});
   const [inpdata, setInpData] = useState({
@@ -59,7 +61,11 @@ const Signup = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col d-flex flex-column justify-content-center align-items-center ">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="col d-flex flex-column justify-content-center align-items-center "
+        >
           <h1 className="text-body-tertiary">
             <i>Signup</i>
           </h1>
@@ -149,7 +155,7 @@ const Signup = () => {
             </form>
             <ToastContainer />
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
