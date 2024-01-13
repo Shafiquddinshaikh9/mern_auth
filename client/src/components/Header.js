@@ -1,13 +1,37 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Header = () => {
+  const [checktoken, setcheckToken] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setcheckToken(token);
+  }, []);
+
+  const loginCheck = () => {
+    if (!checktoken) {
+      toast.warn("Please login first header", {
+        position: "top-center",
+        autoClose: 1000,
+      });
+    }
+  };
+  const logout = () => {
+    localStorage.clear();
+  };
   return (
     <header>
-      <nav classNameName="navbar navbar-expand-lg bg-body-tertiary">
-        <div classNameName="container-fluid">
-          <a classNameName="navbar-brand" href="#">
-            Navbar
-          </a>
+      <nav
+        className="navbar navbar-expand-lg bg-body-tertiary bg-dark "
+        data-bs-theme="dark"
+      >
+        <div className="container-fluid">
+          <Link to="/" className="navbar-brand ps-2">
+            Logo
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -20,37 +44,49 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li className="nav-item me-1">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/services"
+                >
+                  Services
+                </Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
+              <li className="nav-item me-1">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/about"
+                  onClick={loginCheck}
+                >
+                  About
+                </Link>
+              </li>
+              <li className="nav-item me-1">
+                <Link className="nav-link" to="/signup">
+                  Signup
+                </Link>
               </li>
 
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">
-                  Disabled
-                </a>
-              </li>
+              {checktoken ? (
+                <li className="nav-item me-1">
+                  <Link to="/login" onClick={logout}>
+                    <button className="btn btn-warning me-1">Logout</button>
+                  </Link>
+                </li>
+              ) : (
+                <li className="nav-item me-1">
+                  <Link to="/login">
+                    <button className="btn btn-primary me-1">Login</button>
+                  </Link>
+                </li>
+              )}
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
           </div>
         </div>
+        <ToastContainer />
       </nav>
     </header>
   );

@@ -8,11 +8,16 @@ router.post("/signup", async (req, res) => {
   console.log(firstname, lastname, email, password, cpassword);
   try {
     if (!firstname || !lastname || !email || !password || !cpassword)
-      return res.status(401).send({ message: "Plz fill all details" });
+      return res
+        .status(401)
+        .send({ message: "Plz fill all details", code: 401 });
     if (password !== cpassword)
-      return res.status(401).send({ message: "password must matched" });
+      return res
+        .status(401)
+        .send({ message: "password must matched", code: 401 });
     const user = await User.findOne({ email });
-    if (user) return res.status(401).send({ message: "User already exist" });
+    if (user)
+      return res.status(401).send({ message: "User already exist", code: 401 });
     const hashpass = await bcrypt.hash(password, 12);
     const newUser = new User({
       firstname,
@@ -22,10 +27,10 @@ router.post("/signup", async (req, res) => {
       cpassword: hashpass,
     });
     await newUser.save();
-    res.status(201).send({ message: "User registered successfully" });
+    res.status(201).send({ message: "User registered successfully", newUser });
   } catch (error) {
     console.log(error);
-    res.status(501).send({ message: "Something went wrong" });
+    res.status(501).send({ message: "Something went wrong", code: 501 });
   }
 });
 //-------------login---------------//
@@ -33,26 +38,29 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!email || !password)
-      return res.status(401).send({ message: "Plz fill all details" });
+      return res
+        .status(401)
+        .send({ message: "Plz fill all details", code: 401 });
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).send({ message: "User not exist" });
+    if (!user)
+      return res.status(401).send({ message: "User not exist", code: 401 });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
       const token = await user.generateAuthToken();
       console.log(token);
-      res.status(401).send({ message: "token generated", token });
+      res.status(201).send({ message: "token generated", token: token });
     } else {
-      res.status(401).send({ message: "invalid creds pass" });
+      res.status(401).send({ message: "invalid creds pass", code: 401 });
     }
   } catch (error) {
     console.log(error);
-    res.status(501).send({ message: "Something went wrong" });
+    res.status(501).send({ message: "Something went wrong", code: 501 });
   }
 });
 //-------------Home---------------//
-router.get("/home", async (req, res) => {
+router.get("/about", async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
 });
 export default router;
